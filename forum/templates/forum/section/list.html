@@ -1,0 +1,18 @@
+{% extends "forum/base.html" %}
+
+{% block title %}Find section{% endblock %}
+
+{% block content %}
+  <div class="input-group">
+      <input class="form-control search-width" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </div>
+  {% for section in sections %}
+    <div>{{ section.name }}</div>
+  {% endfor %}
+  
+{% endblock %}
+
+{% block side %}
+  hehe
+{% endblock %}
