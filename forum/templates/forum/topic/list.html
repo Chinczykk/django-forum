@@ -1,0 +1,30 @@
+{% extends "forum/base.html" %}
+
+{% block title %}{{ sectionName }}{% endblock %}
+
+{% block content %}
+  <h2 style="text-align: center">Topics for section: {{ sectionName }}</h2   >
+  <br>
+  {% for topic in topics %}
+  <a href="#">
+      <p style="float: right">
+        {{ topic.created | date }}
+      </p>
+      <p style="float: left">
+        {{ topic.owner }}
+      </p>
+      <br><br>
+      <div>
+        <p class="section-list">
+            {{ topic.title }}
+        </p>
+      </div>
+    </a>
+    <hr>
+  {% endfor %}
+  
+{% endblock %}
+
+{% block side %}
+  hehe
+{% endblock %}

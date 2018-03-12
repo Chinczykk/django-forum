@@ -17,7 +17,7 @@ class TopicAdmin(admin.ModelAdmin):
     list_display = ('title', 'owner', 'body', 'created', 'updated', 'section')
     list_filter = ('owner', 'created')
     search_fields = ('name', 'owner')
-    raw_id_fields = ('owner',)
+    raw_id_fields = ('owner','section')
     date_hierarchy = 'created'
     ordering = ['created', 'section']
 
@@ -27,7 +27,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ('owner', 'body', 'created', 'topic')
     list_filter = ('owner', 'created')
     search_fields = ('owner',)
-    raw_id_fields = ('owner',)
+    raw_id_fields = ('owner','topic')
     date_hierarchy = 'created'
     ordering = ['created', 'topic']
 

@@ -3,12 +3,20 @@
 {% block title %}Find section{% endblock %}
 
 {% block content %}
-  <div class="input-group">
-      <input class="form-control search-width" type="search" placeholder="Search" aria-label="Search">
+  <form class="form-inline" method="get" action="{% url 'forum:section_list' %}">
+    <div class="form-group">
+      <input class="form-control" type="text" placeholder="Search" aria-label="Search" name="search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-  </div>
+    </div>
+  </form>
+  <br>
   {% for section in sections %}
-    <div>{{ section.name }}</div>
+  <a href="{% url 'forum:topic_list' section.name %}">
+      <p class="section-list">
+        {{ section.name }}
+      </p>
+    </a>
+      <hr>
   {% endfor %}
   
 {% endblock %}
