@@ -1,0 +1,17 @@
+{% if get_from_section == True %}
+    {% if page.has_previous %}
+        <a href="{{ request.get_full_path }}&&page={{ page.previous_page_number }}">Previous |</a>
+    {% endif %}
+    Strona {{ page.number }} z {{ page.paginator.num_pages }}
+    {% if page.has_next %}
+        <a href="{{ request.get_full_path }}&&page={{ page.next_page_number }}">| Next</a>
+    {% endif %}
+{% else %}
+    {% if page.has_previous %}
+        <a href="?page={{ page.previous_page_number }}">Previous |</a>
+    {% endif %}
+    Strona {{ page.number }} z {{ page.paginator.num_pages }}
+    {% if page.has_next %}
+        <a href="?page={{ page.next_page_number }}">| Next</a>
+    {% endif %}
+{% endif %}

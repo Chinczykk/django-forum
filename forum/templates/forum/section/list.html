@@ -3,9 +3,9 @@
 {% block title %}Find section{% endblock %}
 
 {% block content %}
-  <form class="form-inline" method="get" action="{% url 'forum:section_list' %}">
-    <div class="form-group">
-      <input class="form-control" type="text" placeholder="Search" aria-label="Search" name="search">
+  <form method="get" action="{% url 'forum:section_list' %}">
+    <div class="input-group">
+      <input style="margin-left: 220px" class="form-control" type="search" placeholder="Search for section" aria-label="Search" name="search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </div>
   </form>
@@ -18,7 +18,11 @@
     </a>
       <hr>
   {% endfor %}
-  
+  {% if sections %}
+    <div class="paginator-section">
+      {% include "pagination.html" with page=sections get_from_section=True %}
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block side %}
