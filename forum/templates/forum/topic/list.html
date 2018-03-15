@@ -1,14 +1,13 @@
 {% extends "forum/base.html" %}
 
-{% block title %}{{ sectionName }}{% endblock %}
+{% block title %}{{ section.name }}{% endblock %}
 
 {% block content %}
-  <h2 style="text-align: center">Topics for section: {{ sectionName }}</h2>
   <br>
   <hr>
   {% if topics %}
     {% for topic in topics %}
-    <a href="#">
+    <a href="{% url 'forum:topic_view' section.name topic.title%}">
       <p style="float: right">
         {{ topic.created | date:'Y-m-d H:i' }}
       </p>
@@ -24,14 +23,21 @@
     </a>
     <hr>
     {% endfor %}
-    <div class="paginator-section">
+    <div class="center-text">
       {% include "pagination.html" with page=topics %}
     </div>
   {% else %}
-    <p class="paginator-section">No topics yet</p>
+    <p class="center-text">No topics yet</p>
   {% endif %}  
 {% endblock %}
 
 {% block side %}
-  hehe
+    <div class="center-text adjust-margin-top">
+      <b>Section:</b> {{ section.name }}<br>
+      <b>Owner: </b> {{ section.owner }}<br>
+      <b>Description:</b> {{ section.description }}<br><br>
+      <form method="get" action="">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Subscribe</button>
+      </form>
+    </div>
 {% endblock %}
