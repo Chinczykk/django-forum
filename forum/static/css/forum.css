@@ -23,3 +23,12 @@ a, a:visited, a:hover, a:active {
     border: 2px solid;
     border-radius: 12px;
 }
+
+.input-center {
+    margin: 0 auto; 
+    max-width: 60%;
+}
+
+.error {
+    color: red;
+}

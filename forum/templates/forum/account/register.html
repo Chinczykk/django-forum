@@ -1,0 +1,32 @@
+{% extends "forum/base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'forum:register' %}">
+        {% csrf_token %}
+        <div class="center-text input-center">
+            <b>Login:</b> <input class="form-control" type="text" aria-label="Login" name="login" value="{{ valid.login }}"><br>
+            {% if errors.login %}
+                <div class="error">{{ errors.login }}</div><br>
+            {% endif %}
+            <b>Password:</b><input class="form-control" type="password" name="password" value="{{ valid.password }}"><br>
+            {% if errors.password %}
+                <div class="error">{{ errors.password }}</div><br>
+            {% endif %}
+            <b>Confirm password:</b><input class="form-control" type="password" name="confirmPassword" value="{{ valid.confirmPassword }}"><br>
+            {% if errors.confirmPassword %}
+                <div class="error">{{ errors.confirmPassword }}</div><br>
+            {% endif %}
+            <b>Email:</b><input class="form-control" type="text" name="email" value="{{ valid.email }}"><br>
+            {% if errors.email %}
+                <div class="error">{{ errors.email }}</div><br>
+            {% endif %}
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block side %}
+
+{% endblock %}
