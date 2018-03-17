@@ -6,23 +6,23 @@
     <form method="post" action="{% url 'forum:register' %}">
         {% csrf_token %}
         <div class="center-text input-center">
-            <b>Login:</b> <input class="form-control" type="text" aria-label="Login" name="login" value="{{ valid.login }}"><br>
+            <b>Login:</b> <input class="form-control" type="text" aria-label="Login" name="login" value="{{ valid.login }}">
             {% if errors.login %}
-                <div class="error">{{ errors.login }}</div><br>
+                <div class="error">{{ errors.login }}</div>
             {% endif %}
-            <b>Password:</b><input class="form-control" type="password" name="password" value="{{ valid.password }}"><br>
+            <br><b>Password:</b><input class="form-control" type="password" name="password" value="{{ valid.password }}">
             {% if errors.password %}
-                <div class="error">{{ errors.password }}</div><br>
+                <div class="error">{{ errors.password }}</div>
             {% endif %}
-            <b>Confirm password:</b><input class="form-control" type="password" name="confirmPassword" value="{{ valid.confirmPassword }}"><br>
+            <br><b>Confirm password:</b><input class="form-control" type="password" name="confirmPassword" value="{{ valid.confirmPassword }}">
             {% if errors.confirmPassword %}
-                <div class="error">{{ errors.confirmPassword }}</div><br>
+                <div class="error">{{ errors.confirmPassword }}</div>
             {% endif %}
-            <b>Email:</b><input class="form-control" type="text" name="email" value="{{ valid.email }}"><br>
+            <br><b>Email:</b><input class="form-control" type="text" name="email" value="{{ valid.email }}">
             {% if errors.email %}
-                <div class="error">{{ errors.email }}</div><br>
+                <div class="error">{{ errors.email }}</div>
             {% endif %}
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
+            <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
         </div>
     </form>
 {% endblock %}

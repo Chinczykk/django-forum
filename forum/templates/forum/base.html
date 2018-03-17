@@ -38,12 +38,18 @@
                 </li>
             </ul>
             <ul class="navbar-nav mr-right">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'forum:register' %}">Register</a>
-                </li>
+                {% if not request.session.user   %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'forum:login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'forum:register' %}">Register</a>
+                    </li>
+                {% else %}
+                    <li class="nax-item">
+                        <a class="nav-link" href="{% url 'forum:logout' %}">Logout</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
