@@ -28,9 +28,13 @@
                         Section
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Add new section</a>
+                        {% if request.session.user %}
+                        <a class="dropdown-item" href="{% url 'forum:add_section' %}">Add new section</a>
+                        {% endif %}
                         <a class="dropdown-item" href="{% url 'forum:section_list' %}">Find new section</a>
+                        {% if request.session.user %}
                         <a class="dropdown-item" href="#">Show subscribed sections</a>
+                        {% endif %}
                     </div>
                 </li>
                 <li class="nav-item">

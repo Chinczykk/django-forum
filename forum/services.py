@@ -42,5 +42,21 @@ def check_login_and_password(login, password):
             return False
     return True
 
-def get_user_by_login(login):
-    return User.objects.get(username=login)
+def get_user_by_login(name):
+    return User.objects.get(username=name)
+    
+#TODO: Prepare one method to get user by any attribute 
+
+def get_user_by_id(id):
+    return User.objects.get(id=id)
+
+def check_if_section_name_exists(name):
+    if len(Section.objects.filter(name=name)) > 0:
+        return True
+    else:
+        return False
+
+def add_section(name, description, userId):
+    user = get_user_by_id(userId)
+    section = Section.objects.create(name=name, description=description, owner=user)
+    section.save()

@@ -18,3 +18,34 @@ def section_list(request):
         sections = paginator.page(paginator.num_pages)
     return render(request, 'forum/section/list.html', {'sections': sections,
                                                        'page': page})
+
+def add_section(request):
+    errors = {'name': '', 'description': '', 'isError': False}
+    valid = {'name': '', 'description': ''}
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        description = request.POST.get('description', '')
+
+        if not name:
+            errors['name'] = 'Please tell us name of section'
+        elif len(name) < 3:
+            errors['name'] = 'Name of section should have atleast 3 characters'
+        elif services.check_if_section_name_exists(name):
+            errors['name'] = 'This name of section is already taken!'
+        if not description:
+            errors['description'] = 'Every section should have description'
+
+        if errors['name'] != '' or errors['description'] != '':
+            errors['isError'] = True
+
+            if errors['name'] == '':
+                valid['name'] = name
+            if errors['description'] == '':
+                valid['description'] = description
+        else:
+            if request.session['user']:
+                user = request.session['user']
+                services.add_section(name, description, user)
+            return render(request, 'forum/section/list.html', {})
+
+    return render(request, 'forum/section/add.html', {'errors': errors, 'valid': valid})
