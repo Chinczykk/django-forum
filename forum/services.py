@@ -60,3 +60,9 @@ def add_section(name, description, userId):
     user = get_user_by_id(userId)
     section = Section.objects.create(name=name, description=description, owner=user)
     section.save()
+
+def add_topic(title, body, section, userId):
+    user = get_user_by_id(userId)
+    topic = Topic.objects.create(title=title, body=body, section=section, owner=user)
+    topic.save()
+    return topic

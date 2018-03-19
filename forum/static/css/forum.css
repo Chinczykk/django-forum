@@ -29,6 +29,11 @@ a, a:visited, a:hover, a:active {
     max-width: 100%;
 }
 
+.width-adjust-60 {
+    margin: 0 auto;
+    max-width: 60%;
+}
+
 .error {
     color: red;
 }

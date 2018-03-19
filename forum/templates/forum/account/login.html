@@ -5,7 +5,7 @@
 {% block content %}
     <form method="post" action="{% url 'forum:login' %}">
         {% csrf_token %}
-        <div style="margin-top: 50px" class="center-text input-center">
+        <div style="margin-top: 50px" class="center-text width-adjust-60">
             {% if info %}
                 <div class="info">{{ info }}</div><br>
             {% endif %}
@@ -17,7 +17,7 @@
             {% if errors.password %}
                 <div class="error">{{ errors.password }}</div>
             {% endif %}
-            <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
+            <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
             {% if errors.bad_login_or_password %}
                 <br><br><div class="error">{{ errors.bad_login_or_password }}</div>
             {% endif %}

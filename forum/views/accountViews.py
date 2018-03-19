@@ -48,7 +48,6 @@ def register(request):
             services.add_user(login, password, email)
             info = 'Your account is ready. You can log in now.'
             return render(request, 'forum/account/login.html', {'info': info})
-            #TODO: Call a login.html with a message 'You are registered. You can log in now'
 
     return render(request, 'forum/account/register.html', {'errors': errors,
                                                            'valid': valid})
@@ -65,7 +64,7 @@ def login(request):
             errors['password'] = 'Please tell us your password'
         if errors['login'] == '' and errors['password'] == '' and services.check_login_and_password(login, password):
             errors['bad_login_or_password'] = 'Bad login or password!'
-
+    
         if errors['login'] != '' or errors['password'] != '' or errors['bad_login_or_password']:
             errors['isError'] = True
 

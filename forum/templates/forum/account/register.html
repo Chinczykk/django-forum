@@ -5,7 +5,7 @@
 {% block content %}
     <form method="post" action="{% url 'forum:register' %}">
         {% csrf_token %}
-        <div class="center-text input-center">
+        <div class="center-text width-adjust-60">
             <b>Login:</b> <input class="form-control" type="text" aria-label="Login" name="login" value="{{ valid.login }}">
             {% if errors.login %}
                 <div class="error">{{ errors.login }}</div>
