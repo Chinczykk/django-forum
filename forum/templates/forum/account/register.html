@@ -6,22 +6,13 @@
     <form method="post" action="{% url 'forum:register' %}">
         {% csrf_token %}
         <div class="center-text width-adjust-60">
-            <b>Login:</b> <input class="form-control" type="text" aria-label="Login" name="login" value="{{ valid.login }}">
-            {% if errors.login %}
-                <div class="error">{{ errors.login }}</div>
-            {% endif %}
-            <br><b>Password:</b><input class="form-control" type="password" name="password" value="{{ valid.password }}">
-            {% if errors.password %}
-                <div class="error">{{ errors.password }}</div>
-            {% endif %}
-            <br><b>Confirm password:</b><input class="form-control" type="password" name="confirmPassword" value="{{ valid.confirmPassword }}">
-            {% if errors.confirmPassword %}
-                <div class="error">{{ errors.confirmPassword }}</div>
-            {% endif %}
-            <br><b>Email:</b><input class="form-control" type="text" name="email" value="{{ valid.email }}">
-            {% if errors.email %}
-                <div class="error">{{ errors.email }}</div>
-            {% endif %}
+            {% for field in form %}
+                <b>{{ field.label_tag }}</b><br>
+                {{ field }}
+                {% for error in field.errors %}
+                    <div class="error">{{ error | escape }}</div>
+                {% endfor %}<br>
+            {% endfor %}
             <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
         </div>
     </form>
