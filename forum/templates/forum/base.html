@@ -29,7 +29,11 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% if request.session.user %}
-                        <a class="dropdown-item" href="{% url 'forum:add_section' %}">Add new section</a>
+                        <form id="add_form" method="post" action="{% url 'forum:section_list' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="checker_if_add" value="True">
+                            <a class="dropdown-item" href="javascript:{}" onclick="document.getElementById('add_form').submit();">Add new section</a>
+                        </form>
                         {% endif %}
                         <a class="dropdown-item" href="{% url 'forum:section_list' %}">Find new section</a>
                         {% if request.session.user %}

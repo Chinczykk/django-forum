@@ -16,13 +16,22 @@ def section_list(request):
         sections = paginator.page(1)
     except EmptyPage:
         sections = paginator.page(paginator.num_pages)
-    return render(request, 'forum/section/list.html', {'sections': sections,
+
+    if request.POST.get('checker_if_add', '') == "True" or request.POST.get('first_checker', '') == "True":
+        check_add = add_section(request)
+        return render(request, 'forum/section/list.html', {'sections': sections,
+                                                       'page': page,
+                                                       'add': 'True',
+                                                       'errors': check_add['errors'],
+                                                       'valid': check_add['valid']})
+    else:
+        return render(request, 'forum/section/list.html', {'sections': sections,
                                                        'page': page})
 
 def add_section(request):
     errors = {'name': '', 'description': '', 'isError': False}
     valid = {'name': '', 'description': ''}
-    if request.method == 'POST':
+    if request.method == 'POST' and request.POST.get('checker_if_add', '') != 'True':
         name = request.POST.get('name', '')
         description = request.POST.get('description', '')
 
@@ -46,6 +55,5 @@ def add_section(request):
             if request.session['user']:
                 user = request.session['user']
                 services.add_section(name, description, user)
-            return render(request, 'forum/section/list.html', {})
 
-    return render(request, 'forum/section/add.html', {'errors': errors, 'valid': valid})
+    return {'errors': errors, 'valid': valid}

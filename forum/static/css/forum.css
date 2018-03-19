@@ -26,7 +26,7 @@ a, a:visited, a:hover, a:active {
 
 .input-center {
     margin: 0 auto; 
-    max-width: 60%;
+    max-width: 100%;
 }
 
 .error {
