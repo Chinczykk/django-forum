@@ -5,21 +5,17 @@
 {% block content %}
     <form method="post" action="{% url 'forum:login' %}">
         {% csrf_token %}
-        <div style="margin-top: 50px" class="center-text width-adjust-60">
-            {% if info %}
-                <div class="info">{{ info }}</div><br>
-            {% endif %}
-            <b>Login:</b><input class="form-control" type="text" name="login" value="{{ valid.login }}">
-            {% if errors.login %}
-                <div class="error">{{ errors.login }}</div>
-            {% endif %}
-            <br><b>Password:</b><input class="form-control" type="password" name="password">
-            {% if errors.password %}
-                <div class="error">{{ errors.password }}</div>
-            {% endif %}
+        <div class="center-text width-adjust-60">
+            {% for field in form %}
+                <b>{{ field.label_tag }}</b><br>
+                {{ field }}
+                {% for error in field.errors %}
+                    <div class="error">{{ error | escape }}</div>
+                {% endfor %}<br>
+            {% endfor %}
             <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-            {% if errors.bad_login_or_password %}
-                <br><br><div class="error">{{ errors.bad_login_or_password }}</div>
+            {% if error %}
+                <br><br><div class="error">{{ error }}</div>
             {% endif %}
         </div>
     </form>

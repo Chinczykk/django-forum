@@ -25,3 +25,11 @@ class RegisterForm(forms.ModelForm):
         if password != confirm_password:
             raise forms.ValidationError(
                 {"confirm_password": ["Passwords are not equal",]}
+            )
+
+class LoginForm(forms.ModelForm):
+    login = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = User
+        fields = ('login', 'password')
