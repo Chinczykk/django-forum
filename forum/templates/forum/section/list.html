@@ -28,17 +28,16 @@
 {% block side %}
   {% if add == 'True' %}
     <form method="post" action="{% url 'forum:section_list' %}">
-      {% csrf_token %}
+        {% csrf_token %}
       <div class="center-text input-center">
-        <input type="hidden" name="first_checker" value="True">
-        <b>Name:</b> <input class="form-control" type="text" aria-label="Name" name="name" value="{{ valid.name }}">
-        {% if errors.name %}
-            <div class="error">{{ errors.name }}</div>
-        {% endif %}
-        <br><b>Description:</b><textarea rows="3" class="form-control" name="description" value="{{ valid.description }}"></textarea>
-        {% if errors.description %}
-            <div class="error">{{ errors.description }}</div>
-        {% endif %}
+        <input type="hidden" name="checker" value="True">
+        {% for field in form %}
+          <b>{{ field.label_tag }}</b><br>
+          {{ field }}
+          {% for error in field.errors %}
+            <div class="error">{{ error | escape }}</div>
+          {% endfor %}<br>
+        {% endfor %}
         <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add section</button>
       </div>
     </form>
@@ -46,7 +45,6 @@
     <div class="center-text">
       <form method="post" action="{% url 'forum:section_list' %}">
         {% csrf_token %}
-        <input type="hidden" name="checker_if_add" value="True">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add section</button>
       </form>
     </div>

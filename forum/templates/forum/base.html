@@ -31,7 +31,6 @@
                         {% if user.is_authenticated %}
                         <form id="add_form" method="post" action="{% url 'forum:section_list' %}">
                             {% csrf_token %}
-                            <input type="hidden" name="checker_if_add" value="True">
                             <a class="dropdown-item" href="javascript:{}" onclick="document.getElementById('add_form').submit();">Add new section</a>
                         </form>
                         {% endif %}

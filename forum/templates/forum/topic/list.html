@@ -33,26 +33,23 @@
 
 {% block side %}
     {% if add == 'True' %}
-    <div class="adjust-margin-top">
     <div class="center-text input-center">
     <form method="post" action="{% url 'forum:topic_list' section.name %}">
       {% csrf_token %}
-        <input type="hidden" name="first_checker" value="True">
-        <b>Title:</b> <input class="form-control" type="text" aria-label="Title" name="title" value="{{ valid.title }}">
-        {% if errors.title %}
-            <div class="error">{{ errors.title }}</div>
-        {% endif %}
-        <br><b>Body:</b><textarea rows="3" class="form-control" name="body" value="{{ valid.body }}"></textarea>
-        {% if errors.body %}
-            <div class="error">{{ errors.body }}</div>
-        {% endif %}
+        <input type="hidden" name="checker" value="True">
+        {% for field in form %}
+          <b>{{ field.label_tag }}</b><br>
+          {{ field }}
+          {% for error in field.errors %}
+            <div class="error">{{ error | escape }}</div>
+          {% endfor %}<br>
+        {% endfor %}
         <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add topic</button>
     </form>
     <form method="post" action="{% url 'forum:topic_list' section.name %}">
         {% csrf_token %}
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cancel</button>
     </form>
-    </div>
     </div>
     {% else %}
     <div class="center-text adjust-margin-top">
@@ -65,7 +62,6 @@
       </form>
       <form method="post" action="{% url 'forum:topic_list' section.name %}">
           {% csrf_token %}
-          <input type="hidden" name="checker_if_add" value="True">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add topic</button>
       </form>
     </div>    

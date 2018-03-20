@@ -17,6 +17,9 @@
             {% if error %}
                 <br><br><div class="error">{{ error }}</div>
             {% endif %}
+            {% if request.session.info == 'True' %}
+                <br><br><div class="info">Your account is ready. You can log in now.</div>
+            {% endif %}
         </div>
     </form>
 

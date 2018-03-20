@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .. import services
 from .. import services
 from .. import forms
@@ -11,8 +11,8 @@ def register(request):
         if form.is_valid():
             cd = form.cleaned_data
             services.add_user(cd["login"], cd["password"], cd["email"])
-            info = 'Your account is ready. You can log in now.'
-            return render(request, 'forum/account/login.html', {'info': info}) # TODO: MAKE REDIRECT BECOUSE IT DOESNT WORK
+            request.session["info"] = 'True'
+            return redirect('forum:login')
     else :
         form = forms.RegisterForm()
     return render(request, 'forum/account/register.html', {'form': form})
@@ -35,4 +35,4 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return render(request, 'forum/section/list.html', {})
+    return redirect('forum:section_list')

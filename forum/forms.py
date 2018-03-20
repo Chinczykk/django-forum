@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
+from . import models
 from django.forms import ValidationError
+from . import services
 
 class RegisterForm(forms.ModelForm):
     login = forms.CharField(max_length=20,
@@ -33,3 +35,30 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('login', 'password')
+
+class SectionForm(forms.ModelForm):
+    name = forms.CharField(min_length=5,
+                            max_length=50,
+                            error_messages={'min_length': 'This field should have atleast 5 characters'},
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
+    class Meta:
+        model = models.Section
+        fields = ('name', 'description')
+    def clean(self):
+        cleaned_data = super(SectionForm, self).clean()
+        name = cleaned_data.get("name")
+        if services.check_if_section_name_exists(name):
+            raise forms.ValidationError(
+                {"name": ["Section with this name already exists",]}
+            )
+
+class TopicForm(forms.ModelForm):
+    title = forms.CharField(min_length=5,
+                            max_length=50,
+                            error_messages={'min_length': 'This field should have atleast 5 characters'},
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+    body = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
+    class Meta:
+        model = models.Topic
+        fields = ('title', 'body')
