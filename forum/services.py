@@ -66,3 +66,7 @@ def add_topic(title, body, section, userId):
     topic = Topic.objects.create(title=title, body=body, section=section, owner=user)
     topic.save()
     return topic
+
+def add_comment(body, userId, topic):
+    user = get_user_by_id(userId)
+    comment = Comment.objects.create(body=body, owner=user, topic=topic)

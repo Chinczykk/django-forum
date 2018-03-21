@@ -62,3 +62,12 @@ class TopicForm(forms.ModelForm):
     class Meta:
         model = models.Topic
         fields = ('title', 'body')
+
+class CommentForm(forms.ModelForm):
+    body = forms.CharField(min_length=1,
+                            max_length=50,
+                            error_messages={'min_length': 'This field should have atleast 5 characters'},
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = models.Comment
+        fields = ('body',)
