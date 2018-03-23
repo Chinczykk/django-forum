@@ -77,3 +77,10 @@ def comment_by_id(id):
 def delete_comment(id):
     comment = comment_by_id(id)
     comment.delete()
+
+def topic_by_id(id):
+    return Topic.objects.get(id=id)
+
+def delete_topic(id):
+    topic = topic_by_id(id)
+    topic.delete()

@@ -7,8 +7,8 @@ def topic_list(request, section_name):
     section = services.section_by_name(section_name)
     add = False
     form = None
-    #if request.POST.get('checker', '') == "True":
-    #    check_add = add_topic(request, section)
+    if request.session.get('_auth_user_id', False):
+        userLogged = request.session.get('_auth_user_id', False)
 
     if section_name:
         object_list = services.topics_by_section_name(section_name)
@@ -24,16 +24,22 @@ def topic_list(request, section_name):
         topics = paginator.page(paginator.num_pages)
     
     if request.method == 'POST':
-        form = TopicForm()
-        add = 'True'
-        if request.POST.get('checker', '') == 'True':
-            form = TopicForm(request.POST)
-            if form.is_valid():
-                cd = form.cleaned_data
-                userId = request.session.get('_auth_user_id', False)
-                services.add_topic(cd["title"], cd["body"], section, userId)
-                return redirect('forum:topic_view', section_name, cd["title"])
-    
+        if request.POST.get('edit_topic', '') == 'True':
+            id = request.POST.get('edit_id', '')
+        elif request.POST.get('delete_topic', '') == 'True':
+            id = request.POST.get('delete_id', '')
+            services.delete_topic(id)
+        else:
+            form = TopicForm()
+            add = 'True'
+            if request.POST.get('checker', '') == 'True':
+                form = TopicForm(request.POST)
+                if form.is_valid():
+                    cd = form.cleaned_data
+                    userId = request.session.get('_auth_user_id', False)
+                    services.add_topic(cd["title"], cd["body"], section, userId)
+                    return redirect('forum:topic_view', section_name, cd["title"])
+        
     return render(request, 'forum/topic/list.html', {'topics': topics,
                                                      'section': section,
                                                      'add': add,
