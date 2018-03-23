@@ -31,9 +31,20 @@
         <p style="float: right">
             <b>{{ comment.created | date:'Y-m-d H:i' }}</b>
         </p><br>
-        <div style="clear: both" class="center-text">
+        <div style="clear: both;"></div>
+        <p style="float: left; width: 32%; text-align: left;"></p>
+        <p style="float: left; width: 32%; text-align: center;">
             {{ comment.body }}
-        </div>
+        </p>
+        <p style="float: left; width: 32%; text-align: right;">
+            <form id="{{ comment.id }}" method="post" action="{% url 'forum:topic_view' sectionName topic.title %}">
+                {% csrf_token %}
+                <input type="hidden" name="delete" value="True">
+                <input type="hidden" name="delete_id" value='{{ comment.id }}'>
+                <a href="javascript:{}" onclick="document.getElementById('{{ comment.id }}').submit();">X</a>   
+            </form>
+        </p>
+        <div style="clear: both"></div>
     {% endfor %}
     <br>
     <div class="center-text">
@@ -49,7 +60,7 @@
             {{ field }}
         {% endfor %}
         <div class="center-text">
-            <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add topic</button>
+            <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add comment</button>
         </div>
     </form>
 </div>    

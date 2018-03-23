@@ -70,3 +70,10 @@ def add_topic(title, body, section, userId):
 def add_comment(body, userId, topic):
     user = get_user_by_id(userId)
     comment = Comment.objects.create(body=body, owner=user, topic=topic)
+
+def comment_by_id(id):
+    return Comment.objects.get(id=id)
+
+def delete_comment(id):
+    comment = comment_by_id(id)
+    comment.delete()
