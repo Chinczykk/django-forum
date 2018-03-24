@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .. import services
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ..forms import TopicForm, CommentForm
+from .. import methods
 
 def topic_list(request, section_name):
     section = services.section_by_name(section_name)
@@ -15,14 +16,8 @@ def topic_list(request, section_name):
         object_list = services.topics_by_section_name(section_name)
     else:
         object_list = ()
-    paginator = Paginator(object_list, 4)
     page = request.GET.get('page')
-    try:
-        topics = paginator.page(page)
-    except PageNotAnInteger:
-        topics = paginator.page(1)
-    except EmptyPage:
-        topics = paginator.page(paginator.num_pages)
+    topics = methods.make_pagination(page, object_list, 4)
     
     if request.method == 'POST':
         if request.POST.get('edit_topic', '') == 'True':
@@ -79,14 +74,8 @@ def topic_view(request, section_name, topic_name):
         object_list = services.comments_for_topic(topic_name)
     else:
         object_list = ()
-    paginator = Paginator(object_list, 4)
     page = request.GET.get('page')
-    try:
-        comments = paginator.page(page)
-    except PageNotAnInteger:
-        comments = paginator.page(1)
-    except EmptyPage:
-        comments = paginator.page(paginator.num_pages)
+    comments = methods.make_pagination(page, object_list, 4)
     return render(request, 'forum/topic/view.html', {'topic': topic,
                                                      'sectionName': section_name,
                                                      'comments': comments,

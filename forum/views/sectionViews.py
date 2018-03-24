@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .. import services
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ..forms import SectionForm
+from .. import methods
 
 def section_list(request):
     searchValue = request.GET.get('search', '')
@@ -9,14 +9,8 @@ def section_list(request):
         object_list = services.find_sections(searchValue)
     else:
         object_list = ()
-    paginator = Paginator(object_list, 7)
     page = request.GET.get('page')
-    try:
-        sections = paginator.page(page)
-    except PageNotAnInteger:
-        sections = paginator.page(1)
-    except EmptyPage:
-        sections = paginator.page(paginator.num_pages)
+    sections = methods.make_pagination(page, object_list, 7)
     if request.method == 'POST':
         form = SectionForm()
         if request.POST.get('checker', '') == "True":
