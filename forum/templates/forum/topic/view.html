@@ -36,14 +36,14 @@
         <p style="float: left; width: 32%; text-align: center;">
             {{ comment.body }}
         </p>
+        {% if user.id == topic.owner.id %}
         <p style="float: left; width: 32%; text-align: right;">
-            <form id="{{ comment.id }}" method="post" action="{% url 'forum:topic_view' sectionName topic.title %}">
+            <form id="{{ comment.id }}" method="post" action="{% url 'forum:delete_comment' sectionName topic.title comment.id %}">
                 {% csrf_token %}
-                <input type="hidden" name="delete" value="True">
-                <input type="hidden" name="delete_id" value='{{ comment.id }}'>
                 <a href="javascript:{}" onclick="document.getElementById('{{ comment.id }}').submit();">X</a>   
             </form>
         </p>
+        {% endif %}
         <div style="clear: both"></div>
     {% endfor %}
     <br>

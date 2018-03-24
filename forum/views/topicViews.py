@@ -67,17 +67,13 @@ def topic_list(request, section_name):
 def topic_view(request, section_name, topic_name):
     form = CommentForm()
     if request.method == 'POST':
-        if request.POST.get('delete', '') == 'True':
-            commentId = request.POST.get('delete_id', '')
-            services.delete_comment(commentId)
-        else:
-            form = CommentForm(request.POST)
-            if form.is_valid():
-                cd = form.cleaned_data
-                topic = services.topic_by_title(topic_name, section_name)
-                userId = request.session.get('_auth_user_id', False)
-                services.add_comment(cd["body"], userId, topic)
-                form = CommentForm()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            topic = services.topic_by_title(topic_name, section_name)
+            userId = request.session.get('_auth_user_id', False)
+            services.add_comment(cd["body"], userId, topic)
+            form = CommentForm()
     topic = services.topic_by_title(topic_name, section_name)
     if topic_name:
         object_list = services.comments_for_topic(topic_name)
@@ -98,6 +94,9 @@ def topic_view(request, section_name, topic_name):
                                                      'page': page})
 
 def delete_topic(request, section_name, id):
-    print(request.method)
     services.delete_topic(id)
     return redirect('forum:topic_list', section_name)
+
+def delete_comment(request, section_name, topic_name, id):
+    services.delete_comment(id)
+    return redirect('forum:topic_view', section_name, topic_name)
