@@ -32,9 +32,6 @@ def topic_list(request, section_name):
             form = TopicForm(initial={'title': topic.title, 'body': topic.body})
             task = 'edit'
             form_up = 'True'
-        elif request.POST.get('delete_topic', '') == 'True':
-            id = request.POST.get('delete_id', '')
-            services.delete_topic(id)
         elif request.POST.get('cancel_adding', '') == 'True':
             task = ''
         elif request.POST.get('edit_checker', '') == 'True':
@@ -99,3 +96,8 @@ def topic_view(request, section_name, topic_name):
                                                      'comments': comments,
                                                      'form': form,
                                                      'page': page})
+
+def delete_topic(request, section_name, id):
+    print(request.method)
+    services.delete_topic(id)
+    return redirect('forum:topic_list', section_name)

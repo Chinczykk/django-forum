@@ -31,13 +31,11 @@
             <a href="javascript:{}" onclick="document.getElementById('edit_topic_{{ topic.id }}').submit();">Edit</a>
         </form>
         &emsp;
-        <form id="delete_topic_{{ topic.id }}" style="display: inline" method="post" action="">
+        <form id="delete_topic_{{ topic.id }}" style="display: inline" method="post" action="{% url 'forum:delete_topic' section.name topic.id %}">
             {% csrf_token %}
-            <input type="hidden" name="delete_topic" value="True">
-            <input type="hidden" name="delete_id" value="{{ topic.id }}">
             <a href="javascript:{}" onclick="document.getElementById('delete_topic_{{ topic.id }}').submit();">Delete</a>
         </form>
-        {% endif %}  
+        {% endif %}
       </div><br>
     <hr>
     {% endfor %}
