@@ -53,6 +53,16 @@ class SectionForm(forms.ModelForm):
                 {"name": ["Section with this name already exists",]}
             )
 
+class EditSectionForm(forms.ModelForm):
+    name = forms.CharField(min_length=5,
+                            max_length=50,
+                            error_messages={'min_length': 'This field should have atleast 5 characters'},
+                            widget=forms.TextInput(attrs={'class': 'form-control'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
+    class Meta:
+        model = models.Section
+        fields = ('name', 'description')
+
 class TopicForm(forms.ModelForm):
     title = forms.CharField(min_length=5,
                             max_length=50,

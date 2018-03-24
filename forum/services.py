@@ -67,6 +67,9 @@ def add_topic(title, body, section, userId):
     topic.save()
     return topic
 
+def section_by_id(id):
+    return Section.objects.get(id=id)
+
 def add_comment(body, userId, topic):
     user = get_user_by_id(userId)
     comment = Comment.objects.create(body=body, owner=user, topic=topic)
@@ -90,3 +93,13 @@ def update_topic(id, title, body):
     topic.title = title
     topic.body = body
     topic.save()
+
+def update_section(id, name, description):
+    section = Section.objects.get(id=id)
+    section.name = name
+    section.description = description
+    section.save()
+
+def delete_section(id):
+    section = Section.objects.get(id=id)
+    section.delete()

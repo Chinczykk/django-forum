@@ -26,11 +26,10 @@
 {% endblock %}
 
 {% block side %}
-  {% if add == 'True' %}
+  {% if form_up == 'True' %}
     <form method="post" action="{% url 'forum:section_list' %}">
         {% csrf_token %}
       <div class="center-text input-center">
-        <input type="hidden" name="checker" value="True">
         {% for field in form %}
           <b>{{ field.label_tag }}</b><br>
           {{ field }}
@@ -38,7 +37,13 @@
             <div class="error">{{ error | escape }}</div>
           {% endfor %}<br>
         {% endfor %}
+        {% if edit == 'True' %}
+        <input type="hidden" name="edit_checker" value="True">
+        <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit section</button>
+        {% else %}
+        <input type="hidden" name="checker" value="True">
         <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add section</button>
+        {% endif %}
       </div>
     </form>
   {% else %}

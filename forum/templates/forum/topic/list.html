@@ -87,6 +87,18 @@
           {% csrf_token %}
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add topic</button>
       </form>
+      {% if user.id == section.owner.id %}
+      <form method="post" action="{% url 'forum:section_list' %}">
+          {% csrf_token %}
+          <input type="hidden" name="edit" value="True">
+          <input type="hidden" name="id" value="{{ section.id }}">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit section</button>
+      </form>
+      <form method="post" action="{% url 'forum:delete_section' section.id %}">
+          {% csrf_token %}
+          <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete section</button>
+      </form>
+      {% endif %}
     </div>    
     {% endif %}
 {% endblock %}
