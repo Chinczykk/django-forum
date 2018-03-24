@@ -50,11 +50,10 @@
 {% endblock %}
 
 {% block side %}
-    {% if add == 'True' %}
+    {% if form_up == 'True' %}
     <div class="center-text input-center">
     <form method="post" action="{% url 'forum:topic_list' section.name %}">
       {% csrf_token %}
-        <input type="hidden" name="checker" value="True">
         {% for field in form %}
           <b>{{ field.label_tag }}</b><br>
           {{ field }}
@@ -62,10 +61,18 @@
             <div class="error">{{ error | escape }}</div>
           {% endfor %}<br>
         {% endfor %}
-        <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add topic</button>
+        <br>
+        {% if task == 'add' %}
+        <input type="hidden" name="add_checker" value="True">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add topic</button>
+        {% elif task == 'edit' %}
+        <input type="hidden" name="edit_checker" value="True">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit topic</button>
+        {% endif %}
     </form>
     <form method="post" action="{% url 'forum:topic_list' section.name %}">
         {% csrf_token %}
+          <input type="hidden" name="cancel_adding" value="True">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cancel</button>
     </form>
     </div>

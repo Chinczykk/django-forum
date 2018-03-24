@@ -84,3 +84,9 @@ def topic_by_id(id):
 def delete_topic(id):
     topic = topic_by_id(id)
     topic.delete()
+
+def update_topic(id, title, body):
+    topic = Topic.objects.get(id=id)
+    topic.title = title
+    topic.body = body
+    topic.save()
