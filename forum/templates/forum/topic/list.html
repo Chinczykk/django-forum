@@ -23,7 +23,7 @@
       </div>
     </a>
     <div style="float: left; width: 32%; text-align: right;">
-        {% if user.id == topic.owner.id %}
+        {% if user.id == topic.owner.id or user.id == section.owner.id %}
         <form id="edit_topic_{{ topic.id }}" style="display: inline" method="post" action="">
             {% csrf_token %}
             <input type="hidden" name="edit_topic" value="True">
