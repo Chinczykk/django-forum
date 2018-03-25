@@ -36,7 +36,7 @@
         <p style="float: left; width: 32%; text-align: center;">
             {{ comment.body }}
         </p>
-        {% if user.id == topic.owner.id %}
+        {% if user.id == comment.owner.id %}
         <p style="float: left; width: 32%; text-align: right;">
             <form id="{{ comment.id }}" method="post" action="{% url 'forum:delete_comment' sectionName topic.title comment.id %}">
                 {% csrf_token %}
