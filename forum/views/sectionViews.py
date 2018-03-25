@@ -18,9 +18,11 @@ def section_list(request):
             request.session['edit_id'] = id
             section = services.section_by_id(id)
             form = EditSectionForm(initial={'name': section.name, 'description': section.description})
-            edit = 'True'
+            form_up = 'True'
+            edit = {'is_ready': 'True', 'name': section.name}
         elif request.POST.get('edit_checker', '') == 'True':
             form = EditSectionForm(request.POST)
+            form_up = 'True'
             if form.is_valid():
                 cd = form.cleaned_data
                 id = request.session.get('edit_id', False)
@@ -29,9 +31,15 @@ def section_list(request):
                 del request.session['edit_id']
                 return redirect('forum:topic_list', section.name)
             else:
-                edit = 'True'
+                id = request.session.get('edit_id', False)
+                section = services.section_by_id(id)
+                edit = {'is_ready': 'True', 'name': section.name}
+        elif request.POST.get('cancel', '') == 'True':
+            form_up = 'False'
+            form = None
         else:
             form = SectionForm()
+            form_up = 'True'
             if request.POST.get('checker', '') == "True":
                 form = SectionForm(request.POST)
                 if form.is_valid():
@@ -43,7 +51,7 @@ def section_list(request):
         return render(request, 'forum/section/list.html', {'sections': sections,
                                                                     'page': page,
                                                                     'form': form,
-                                                                    'form_up': 'True',
+                                                                    'form_up': form_up,
                                                                     'edit': edit})
     else:
         return render(request, 'forum/section/list.html', {'sections': sections,

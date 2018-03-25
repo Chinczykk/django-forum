@@ -27,7 +27,7 @@ def topic_list(request, section_name):
             form = TopicForm(initial={'title': topic.title, 'body': topic.body})
             task = 'edit'
             form_up = 'True'
-        elif request.POST.get('cancel_adding', '') == 'True':
+        elif request.POST.get('cancel', '') == 'True':
             task = ''
         elif request.POST.get('edit_checker', '') == 'True':
             form_up = 'True'

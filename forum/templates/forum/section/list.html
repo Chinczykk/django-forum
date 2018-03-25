@@ -37,7 +37,7 @@
             <div class="error">{{ error | escape }}</div>
           {% endfor %}<br>
         {% endfor %}
-        {% if edit == 'True' %}
+        {% if edit.is_ready == 'True' %}
         <input type="hidden" name="edit_checker" value="True">
         <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit section</button>
         {% else %}
@@ -46,6 +46,21 @@
         {% endif %}
       </div>
     </form>
+    <div class="center-text">
+    {% if edit.is_ready == 'True' %}
+    <form method="post" action="{% url 'forum:topic_list' edit.name %}">
+      {% csrf_token %}
+      <input type="hidden" name="cancel" value="True">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cancel</button>
+    </form>
+    </div>
+    {% else %}
+    <form method="post" action="{% url 'forum:section_list' %}">
+      {% csrf_token %}
+      <input type="hidden" name="cancel" value="True">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cancel</button>
+    </form>
+    {% endif %}
   {% else %}
     <div class="center-text">
       <form method="post" action="{% url 'forum:section_list' %}">
