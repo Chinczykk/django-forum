@@ -62,11 +62,13 @@
     </form>
     {% endif %}
   {% else %}
+    {% if user.is_authenticated %}
     <div class="center-text">
       <form method="post" action="{% url 'forum:section_list' %}">
         {% csrf_token %}
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add section</button>
       </form>
     </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

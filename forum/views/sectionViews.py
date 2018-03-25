@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .. import services
 from ..forms import SectionForm, EditSectionForm
 from .. import methods
+from django.contrib.auth.decorators import login_required
+
 
 def section_list(request):
     edit = ''
@@ -57,6 +59,10 @@ def section_list(request):
         return render(request, 'forum/section/list.html', {'sections': sections,
                                                        'page': page})
 
+@login_required
 def delete_section(request, id):
-    services.delete_section(id)
+    section_owner_id = services.section_by_id(id).owner.id
+    logged_user_id = request.session.get('_auth_user_id', False)
+    if int(logged_user_id) == int(section_owner_id):
+        services.delete_section(id)
     return redirect('forum:section_list')

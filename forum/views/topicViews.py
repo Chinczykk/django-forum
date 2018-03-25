@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .. import services
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
 from ..forms import TopicForm, CommentForm
 from .. import methods
 
@@ -82,10 +83,18 @@ def topic_view(request, section_name, topic_name):
                                                      'form': form,
                                                      'page': page})
 
+@login_required
 def delete_topic(request, section_name, id):
-    services.delete_topic(id)
+    topic_owner_id = services.topic_by_id(id).owner.id
+    logged_user_id = request.session.get("_auth_user_id", False)
+    if int(topic_owner_id) == int(logged_user_id):
+        services.delete_topic(id)
     return redirect('forum:topic_list', section_name)
 
+@login_required
 def delete_comment(request, section_name, topic_name, id):
-    services.delete_comment(id)
+    comment_owner_id = services.comment_by_id(id).owner.id
+    logged_user_id = request.session.get("_auth_user_id", False)
+    if int(comment_owner_id) == int(logged_user_id):
+        services.delete_comment(id)
     return redirect('forum:topic_view', section_name, topic_name)

@@ -53,6 +53,7 @@
     {% else %}
         <p class="center-text adjust-margin-top">No comments yet :(</p>
     {% endif %}
+    {% if user.is_authenticated %}
     <form method="post" action="{% url 'forum:topic_view' sectionName topic.title %}">
         {% csrf_token %}
         <input type="hidden" name="checker" value="True">
@@ -63,5 +64,6 @@
             <br><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add comment</button>
         </div>
     </form>
+    {% endif %}
 </div>    
 {% endblock %}
