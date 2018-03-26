@@ -19,7 +19,7 @@ def section_list(request):
             id = request.POST.get('id', '')
             request.session['edit_id'] = id
             section = services.section_by_id(id)
-            form = EditSectionForm(initial={'name': section.name, 'description': section.description})
+            form = EditSectionForm(initial={'last_name': section.name, 'name': section.name, 'description': section.description})
             form_up = 'True'
             edit = {'is_ready': 'True', 'name': section.name}
         elif request.POST.get('edit_checker', '') == 'True':

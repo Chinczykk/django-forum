@@ -59,9 +59,19 @@ class EditSectionForm(forms.ModelForm):
                             error_messages={'min_length': 'This field should have atleast 5 characters'},
                             widget=forms.TextInput(attrs={'class': 'form-control'}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(widget=forms.HiddenInput())
     class Meta:
         model = models.Section
         fields = ('name', 'description')
+    def clean(self):
+        cleaned_data = super(EditSectionForm, self).clean()
+        name = cleaned_data.get("name")
+        last_name = cleaned_data.get("last_name")
+        if name != last_name:
+            if services.check_if_section_name_exists(name):
+                raise forms.ValidationError(
+                    {"name": ["Section with this name already exists",]}
+                )
 
 class TopicForm(forms.ModelForm):
     title = forms.CharField(min_length=5,
