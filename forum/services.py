@@ -59,6 +59,7 @@ def check_if_section_name_exists(name):
 def add_section(name, description, user):
     section = Section.objects.create(name=name, description=description, owner=user)
     section.save()
+    subscribe(user, section)
 
 def add_topic(title, body, section, user):
     topic = Topic.objects.create(title=title, body=body, section=section, owner=user)
@@ -102,4 +103,16 @@ def delete_section(id):
     section.delete()
 
 def subscribe(user, section):
-    Subscribtion.objects.create(user=user, section=section)
+    if not check_if_user_is_subscribing(user, section):
+        Subscribtion.objects.create(user=user, section=section)
+
+def unsubscribe(user, section):
+    if check_if_user_is_subscribing(user, section):
+        sub = Subscribtion.objects.filter(user=user, section=section)[0]
+        sub.delete()
+
+def check_if_user_is_subscribing(user, section):
+    if len(Subscribtion.objects.filter(user=user, section=section)) > 0:
+        return True
+    else:
+        return False

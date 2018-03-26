@@ -80,10 +80,19 @@
       <b>Owner: </b> {{ section.owner }}<br>
       <b>Description:</b> {{ section.description }}<br><br>
       {% if user.is_authenticated %}
+      {% if not user.id == section.owner.id %}
+      {% if is_user_sub == False %}
       <form method="post" action="{% url 'forum:subscribe' section.id %}">
           {% csrf_token %}
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Subscribe</button>
       </form>
+      {% else %}
+      <form method="post" action="{% url 'forum:unsubscribe' section.id %}">
+        {% csrf_token %}
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Unsubscribe</button>
+      </form>
+      {% endif %}
+      {% endif %}
       <form method="post" action="{% url 'forum:topic_list' section.name %}">
           {% csrf_token %}
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add topic</button>

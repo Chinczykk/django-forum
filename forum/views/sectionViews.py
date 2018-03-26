@@ -71,3 +71,9 @@ def subscribe_section(request, id):
     section = services.section_by_id(id)
     services.subscribe(request.user, section)
     return redirect('forum:topic_list', section.name)
+
+@login_required
+def unsubscribe_section(request, id):
+    section = services.section_by_id(id)
+    services.unsubscribe(request.user, section)
+    return redirect('forum:topic_list', section.name)

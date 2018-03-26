@@ -10,6 +10,10 @@ def topic_list(request, section_name):
     task = ''
     form = None
     form_up = False
+    if services.check_if_user_is_subscribing(request.user, section):
+        is_user_sub = True
+    else:
+        is_user_sub = False
 
     if section_name:
         object_list = services.topics_by_section_name(section_name)
@@ -55,7 +59,8 @@ def topic_list(request, section_name):
                                                      'task': task,
                                                      'page': page,
                                                      'form': form,
-                                                     'form_up': form_up})
+                                                     'form_up': form_up,
+                                                     'is_user_sub': is_user_sub})
 
 def topic_view(request, section_name, topic_name):
     form = CommentForm()
