@@ -116,3 +116,6 @@ def check_if_user_is_subscribing(user, section):
         return True
     else:
         return False
+
+def subscribtions_by_user(user):
+    return Subscribtion.objects.filter(user=user)

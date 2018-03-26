@@ -1,0 +1,27 @@
+{% extends "forum/base.html" %}
+
+{% block title %}Subscribtions{% endblock %}
+
+{% block content %}
+    {% if sections %}
+    <h3 class="center-text">List of your subscribtions:</h3>
+    <hr>
+    {% for section in sections %}
+        <a href="{% url 'forum:topic_list' section.name %}">
+            <p class="section-list">{{ section.name }}</p>
+        </a>
+        <hr>
+    {% endfor %}
+        <div class="center-text">
+            {% include "pagination.html" with page=sections %}
+        </div>
+    {% else %}
+        <p class="center-text adjust-margin-top">
+            You don't have subscribtions yet!
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block side %}
+
+{% endblock %}

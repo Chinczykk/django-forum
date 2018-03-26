@@ -36,7 +36,7 @@
                         {% endif %}
                         <a class="dropdown-item" href="{% url 'forum:section_list' %}">Find new section</a>
                         {% if user.is_authenticated %}
-                        <a class="dropdown-item" href="#">Show subscribed sections</a>
+                        <a class="dropdown-item" href="{% url 'forum:subscribtion_list' %}">Show subscribed sections</a>
                         {% endif %}
                     </div>
                 </li>
