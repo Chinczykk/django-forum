@@ -40,3 +40,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.body
+
+class Subscribtion(models.Model):
+    user = models.ForeignKey(User, related_name='user')
+    section = models.ForeignKey(Section, related_name='section')

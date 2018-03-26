@@ -1,4 +1,4 @@
-from .models import Section, Topic, Comment
+from .models import Section, Topic, Comment, Subscribtion
 from django.contrib.auth.models import User
 
 def find_sections(search):
@@ -56,13 +56,11 @@ def check_if_section_name_exists(name):
     else:
         return False
 
-def add_section(name, description, userId):
-    user = get_user_by_id(userId)
+def add_section(name, description, user):
     section = Section.objects.create(name=name, description=description, owner=user)
     section.save()
 
-def add_topic(title, body, section, userId):
-    user = get_user_by_id(userId)
+def add_topic(title, body, section, user):
     topic = Topic.objects.create(title=title, body=body, section=section, owner=user)
     topic.save()
     return topic
@@ -70,8 +68,7 @@ def add_topic(title, body, section, userId):
 def section_by_id(id):
     return Section.objects.get(id=id)
 
-def add_comment(body, userId, topic):
-    user = get_user_by_id(userId)
+def add_comment(body, user, topic):
     comment = Comment.objects.create(body=body, owner=user, topic=topic)
 
 def comment_by_id(id):
@@ -103,3 +100,6 @@ def update_section(id, name, description):
 def delete_section(id):
     section = Section.objects.get(id=id)
     section.delete()
+
+def subscribe(user, section):
+    Subscribtion.objects.create(user=user, section=section)

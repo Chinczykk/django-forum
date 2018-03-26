@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Section, Topic, Comment
+from .models import Section, Topic, Comment, Subscribtion
 
 # Register your models here.
 
@@ -32,3 +32,9 @@ class CommentAdmin(admin.ModelAdmin):
     ordering = ['created', 'topic']
 
 admin.site.register(Comment, CommentAdmin)
+
+class SubscribtionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'section')
+    raw_id_fields = ('user', 'section')
+
+admin.site.register(Subscribtion, SubscribtionAdmin)

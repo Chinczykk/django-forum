@@ -46,8 +46,7 @@ def section_list(request):
                 form = SectionForm(request.POST)
                 if form.is_valid():
                     cd = form.cleaned_data
-                    userId = request.session.get('_auth_user_id', False)
-                    services.add_section(cd["name"], cd["description"], userId)
+                    services.add_section(cd["name"], cd["description"], request.user)
                     return redirect('forum:topic_list', cd["name"])
 
         return render(request, 'forum/section/list.html', {'sections': sections,
@@ -62,7 +61,13 @@ def section_list(request):
 @login_required
 def delete_section(request, id):
     section_owner_id = services.section_by_id(id).owner.id
-    logged_user_id = request.session.get('_auth_user_id', False)
+    logged_user_id = request.user.id
     if int(logged_user_id) == int(section_owner_id):
         services.delete_section(id)
     return redirect('forum:section_list')
+
+@login_required
+def subscribe_section(request, id):
+    section = services.section_by_id(id)
+    services.subscribe(request.user, section)
+    return redirect('forum:topic_list', section.name)
