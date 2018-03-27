@@ -112,7 +112,7 @@ def unsubscribe(user, section):
         sub.delete()
 
 def check_if_user_is_subscribing(user, section):
-    if len(Subscribtion.objects.filter(user=user, section=section)) > 0:
+    if len(Subscribtion.objects.filter(user_id=user.id, section=section)) > 0:
         return True
     else:
         return False
@@ -125,4 +125,5 @@ def topics_for_subscribtions(user):
     topics = []
     for sub in subs:
         topics += topics_by_section_name(sub.section.name)
+    topics = Topic.objects.order_by('-created')
     return topics
