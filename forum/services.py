@@ -119,3 +119,10 @@ def check_if_user_is_subscribing(user, section):
 
 def subscribtions_by_user(user):
     return Subscribtion.objects.filter(user=user)
+
+def topics_for_subscribtions(user):
+    subs = Subscribtion.objects.filter(user=user)
+    topics = []
+    for sub in subs:
+        topics += topics_by_section_name(sub.section.name)
+    return topics

@@ -1,0 +1,44 @@
+{% extends "forum/base.html" %}
+
+{% block title %}New topics{% endblock %}
+
+{% block content %}
+    <br>
+    <hr>
+    {% if topics %}
+        {% for topic in topics %}
+        <p style="float: left; width: 32%; text-align: left;">
+            {{ topic.created | date:'Y-m-d H:i' }}
+        </p>
+        <a style="float: left; width: 32%; text-align: center;" href="{% url 'forum:topic_list' topic.section.name %}">
+            {{ topic.section.name }}
+        </a>
+        <p style="float: left; width: 32%; text-align: right;">
+            {{ topic.owner }}
+        </p>
+        <br><br>
+        <p style="float: left; width: 32%; text-align: left;"></p>
+        <a style="float: left; width: 32%; text-align: center;" href="{% url 'forum:topic_view' topic.section.name topic.title%}">
+        <div>
+            <p class="section-list">
+                {{ topic.title }}
+            </p>
+        </div>
+        </a>
+        <div style="float: left; width: 32%; text-align: right;">
+        </div><br>
+        <hr>
+        {% endfor %}
+        <div class="center-text">
+            {% include "pagination.html" with page=topics %}
+        </div>
+    {% else %}
+        <p class="center-text adjust-margin-top">
+            There are no topics in your subscribtions
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block side %}
+
+{% endblock %}

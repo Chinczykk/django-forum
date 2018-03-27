@@ -85,6 +85,16 @@ def topic_view(request, section_name, topic_name):
                                                      'form': form,
                                                      'page': page})
 
+def new_topic_list(request):
+    if not request.user.is_authenticated():
+        return redirect('forum:section_list')
+
+    object_list = services.topics_for_subscribtions(request.user)
+    page = request.GET.get('page')
+    topics = methods.make_pagination(page, object_list, 4)
+    return render(request, 'forum/topic/new_list.html', {'page': page,
+                                                         'topics': topics})
+
 @login_required
 def delete_topic(request, section_name, id):
     topic_owner_id = services.topic_by_id(id).owner.id

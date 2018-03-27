@@ -7,11 +7,13 @@ from views import subscribtionViews
 urlpatterns = [ 
     #url(r'^$', views.subscriptions_topics, name='subscriptions_topics')
     #url(r'^/', sectionViews.section_list, name='default'),
+    url(r'^$', topicViews.new_topic_list, name="default"),
     url(r'^find_section/', sectionViews.section_list, name='section_list'),
     url(r'^subscribtions/', subscribtionViews.subscribtion_list, name='subscribtion_list'),
     url(r'^register/', accountViews.register, name='register'), 
     url(r'^login/', accountViews.login, name='login'),
     url(r'^logout/', accountViews.logout, name='logout'),
+    url(r'^new_topics/', topicViews.new_topic_list, name='new_topic_list'),
     url(r'^(?P<section_name>[\w\-\:\?\! ]+)/delete_topic/(?P<id>[\w\- ]+)/', topicViews.delete_topic, name='delete_topic'),
     url(r'^delete_section/(?P<id>[\w\- ]+)/', sectionViews.delete_section, name='delete_section'),
     url(r'^subscribe/(?P<id>[\w\- ]+)/', subscribtionViews.subscribe_section, name='subscribe'),    
