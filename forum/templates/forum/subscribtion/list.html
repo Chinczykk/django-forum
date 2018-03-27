@@ -7,9 +7,18 @@
     <h3 class="center-text">List of your subscribtions:</h3>
     <hr>
     {% for section in sections %}
-        <a href="{% url 'forum:topic_list' section.name %}">
+        <p style="float: left; width: 32%; text-align: left;"></p>
+        <a style="float: left; width: 32%; text-align: center;" href="{% url 'forum:topic_list' section.name %}">
             <p class="section-list">{{ section.name }}</p>
         </a>
+        {% if not user.id == section.owner.id %}
+        <div style="float: left; width: 32%; text-align: right;">
+            <a href="{% url 'forum:unsubscribe' section.id %}">
+                Unsubscribe
+            </a>
+        </div>
+        {% endif %}  
+        &emsp;
         <hr>
     {% endfor %}
         <div class="center-text">

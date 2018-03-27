@@ -65,15 +65,3 @@ def delete_section(request, id):
     if int(logged_user_id) == int(section_owner_id):
         services.delete_section(id)
     return redirect('forum:section_list')
-
-@login_required
-def subscribe_section(request, id):
-    section = services.section_by_id(id)
-    services.subscribe(request.user, section)
-    return redirect('forum:topic_list', section.name)
-
-@login_required
-def unsubscribe_section(request, id):
-    section = services.section_by_id(id)
-    services.unsubscribe(request.user, section)
-    return redirect('forum:topic_list', section.name)

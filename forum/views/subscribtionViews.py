@@ -15,3 +15,18 @@ def subscribtion_list(request):
     sections = methods.make_pagination(page, object_list, 8)
     return render(request, 'forum/subscribtion/list.html', {'sections': sections,
                                                             'page': page})
+
+@login_required
+def subscribe_section(request, id):
+    section = services.section_by_id(id)
+    services.subscribe(request.user, section)
+    return redirect('forum:topic_list', section.name)
+
+@login_required
+def unsubscribe_section(request, id):
+    section = services.section_by_id(id)
+    services.unsubscribe(request.user, section)
+    if request.POST.get('top_list', '') == "True":
+        return redirect('forum:topic_list', section.name)
+    else:
+        return redirect('forum:subscribtion_list')
