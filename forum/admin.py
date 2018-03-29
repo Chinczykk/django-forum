@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Section, Topic, Comment, Subscribtion
+from .models import Section, Topic, Comment, Subscribtion, Vote
 
 # Register your models here.
 
@@ -14,7 +14,7 @@ class SectionAdmin(admin.ModelAdmin):
 admin.site.register(Section, SectionAdmin)
 
 class TopicAdmin(admin.ModelAdmin):
-    list_display = ('title', 'owner', 'body', 'created', 'updated', 'section')
+    list_display = ('title', 'owner', 'body', 'votes', 'created', 'section')
     list_filter = ('owner', 'created')
     search_fields = ('name', 'owner')
     raw_id_fields = ('owner','section')
@@ -38,3 +38,9 @@ class SubscribtionAdmin(admin.ModelAdmin):
     raw_id_fields = ('user', 'section')
 
 admin.site.register(Subscribtion, SubscribtionAdmin)
+
+class VoteAdmin(admin.ModelAdmin):
+    list_display = ('user', 'topic')
+    raw_id_fields = ('user', 'topic')
+
+admin.site.register(Vote, VoteAdmin)

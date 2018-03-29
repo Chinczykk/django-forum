@@ -19,6 +19,7 @@ class Topic(models.Model):
     title = models.CharField(max_length=50)
     owner = models.ForeignKey(User, related_name='topics')
     body = models.TextField()
+    votes = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
@@ -44,3 +45,7 @@ class Comment(models.Model):
 class Subscribtion(models.Model):
     user = models.ForeignKey(User, related_name='user')
     section = models.ForeignKey(Section, related_name='section')
+
+class Vote(models.Model):
+    user = models.ForeignKey(User, related_name='vote_user')
+    topic = models.ForeignKey(Topic, related_name='topic')
