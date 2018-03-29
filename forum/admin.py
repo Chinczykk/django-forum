@@ -40,7 +40,7 @@ class SubscribtionAdmin(admin.ModelAdmin):
 admin.site.register(Subscribtion, SubscribtionAdmin)
 
 class VoteAdmin(admin.ModelAdmin):
-    list_display = ('user', 'topic')
+    list_display = ('user', 'topic', 'vote_type')
     raw_id_fields = ('user', 'topic')
 
 admin.site.register(Vote, VoteAdmin)

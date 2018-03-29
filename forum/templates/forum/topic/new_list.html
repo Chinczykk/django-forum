@@ -17,7 +17,9 @@
             {{ topic.owner }}
         </p>
         <br><br>
-        <p style="float: left; width: 32%; text-align: left;"></p>
+        <p style="float: left; width: 32%; text-align: left;">
+            {{ topic.votes }}
+        </p>
         <a style="float: left; width: 32%; text-align: center;" href="{% url 'forum:topic_view' topic.section.name topic.title%}">
         <div>
             <p class="section-list">

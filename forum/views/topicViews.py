@@ -112,3 +112,15 @@ def delete_comment(request, section_name, topic_name, id):
     if int(comment_owner_id) == int(logged_user_id) or int(section_owner_id) == int(logged_user_id):
         services.delete_comment(id)
     return redirect('forum:topic_view', section_name, topic_name)
+
+@login_required
+def upvote(request, section_name, id):
+    topic = services.topic_by_id(id)
+    services.upvote(request.user, topic)
+    return redirect('forum:topic_view', section_name, topic.title)
+
+@login_required
+def downvote(request, section_name, id):
+    topic = services.topic_by_id(id)
+    services.downvote(request.user, topic)
+    return redirect('forum:topic_view', section_name, topic.title)

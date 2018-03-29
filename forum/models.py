@@ -49,3 +49,4 @@ class Subscribtion(models.Model):
 class Vote(models.Model):
     user = models.ForeignKey(User, related_name='vote_user')
     topic = models.ForeignKey(Topic, related_name='topic')
+    vote_type = models.CharField(max_length=1, default='u')
