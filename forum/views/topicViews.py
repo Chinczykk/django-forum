@@ -73,6 +73,11 @@ def topic_view(request, section_name, topic_name):
             services.add_comment(cd["body"], request.user, topic)
             form = CommentForm()
     topic = services.topic_by_title(topic_name, section_name)
+    vote = services.get_vote(request.user, topic)
+    if vote:
+        vote_type = vote.vote_type
+    else:
+        vote_type = ''
     if topic_name:
         object_list = services.comments_for_topic(topic_name)
     else:
@@ -83,7 +88,8 @@ def topic_view(request, section_name, topic_name):
                                                      'section': section,
                                                      'comments': comments,
                                                      'form': form,
-                                                     'page': page})
+                                                     'page': page,
+                                                     'vote_type': vote_type})
 
 def new_topic_list(request):
     if not request.user.is_authenticated():

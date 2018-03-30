@@ -11,9 +11,16 @@
         <b>{{ topic.owner }}</b>
     </p><br><br>
     <p style="float: left; width: 32%; text-align: left;">
+        {% if user.is_authenticated %}
         <a href="{% url 'forum:upvote' section.name topic.id %}">
-            <span class="small glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
+            <span 
+                {% if vote_type == 'u' %} 
+                    style="color: green;" 
+                {% endif %}
+                class="small glyphicon glyphicon-triangle-top" aria-hidden="true">
+            </span>
         </a>
+        {% endif %}
         {% if topic.votes < 0 %}
         <span style="color: red;">
         {% elif topic.votes = 0 %}
@@ -23,9 +30,16 @@
         {% endif %}
             {{ topic.votes }}
         </span>
+        {% if user.is_authenticated %}
         <a href="{% url 'forum:downvote' section.name topic.id %}">
-            <span class="small glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+            <span 
+                {% if vote_type == 'd' %}
+                    style="color: red;"
+                {% endif %}
+                class="small glyphicon glyphicon-triangle-bottom" aria-hidden="true">
+            </span>
         </a>
+        {% endif %}
     </p>
     <p style="float: left; width: 32%; text-align: center;">
         <b>{{ topic.title }}</b>

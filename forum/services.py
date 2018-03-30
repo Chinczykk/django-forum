@@ -129,18 +129,48 @@ def topics_for_subscribtions(user):
     return topics
 
 def upvote(user, topic):
-    if not check_if_user_has_voted(user, topic):
-        Vote.objects.create(user=user, topic=topic, vote_type='u')
+    if len(Vote.objects.filter(user_id=user.id, topic=topic)) > 0:
+        vote = Vote.objects.filter(user_id=user.id, topic=topic)[0]
+    else:
+        vote = {}
+    if not vote:
+        Vote.objects.create(user_id=user.id, topic=topic, vote_type='u')
         topic.votes += 1
+        topic.save()
+    elif vote.vote_type == 'u':
+        topic.votes -= 1
+        topic.save()
+        vote.delete()
+    elif vote.vote_type == 'd':
+        vote.vote_type = 'u'
+        vote.save()
+        topic.votes += 2
         topic.save()
 
 def downvote(user, topic):
-    if not check_if_user_has_voted(user, topic):
-        Vote.objects.create(user=user, topic=topic, vote_type='d')
+    if len(Vote.objects.filter(user_id=user.id, topic=topic)) > 0:
+        vote = Vote.objects.filter(user_id=user.id, topic=topic)[0]
+    else:
+        vote = {}
+    if not vote:
+        Vote.objects.create(user_id=user.id, topic=topic, vote_type='d')
         topic.votes -= 1
+        topic.save()
+    elif vote.vote_type == 'd':
+        topic.votes += 1
+        topic.save()
+        vote.delete()
+    elif vote.vote_type == 'u':
+        vote.vote_type = 'd'
+        vote.save()
+        topic.votes -= 2
         topic.save()
 
 def check_if_user_has_voted(user, topic):
-    if len(Vote.objects.filter(user=user, topic=topic)) > 0:
+    if len(Vote.objects.filter(user_id=user.id, topic=topic)) > 0:
         return True
     return False
+
+def get_vote(user, topic):
+    if len(Vote.objects.filter(user_id=user.id, topic=topic)) > 0:
+        return Vote.objects.filter(user_id=user.id, topic=topic)[0]
