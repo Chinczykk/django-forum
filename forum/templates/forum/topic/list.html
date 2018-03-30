@@ -15,7 +15,15 @@
       </p>
       <br><br>
     <p style="float: left; width: 32%; text-align: left;">
-      {{ topic.votes }}
+        {% if topic.votes < 0 %}
+        <span style="color: red;">
+        {% elif topic.votes = 0 %}
+        <span>
+        {% else %}
+        <span style="color: green;">
+        {% endif %}
+          {{ topic.votes }}
+        </span>
     </p>
     <a style="float: left; width: 32%; text-align: center;" href="{% url 'forum:topic_view' section.name topic.title%}">
       <div>

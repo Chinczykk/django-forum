@@ -129,11 +129,18 @@ def topics_for_subscribtions(user):
     return topics
 
 def upvote(user, topic):
-    Vote.objects.create(user=user, topic=topic, vote_type='u')
-    topic.votes += 1
-    topic.save()
+    if not check_if_user_has_voted(user, topic):
+        Vote.objects.create(user=user, topic=topic, vote_type='u')
+        topic.votes += 1
+        topic.save()
 
 def downvote(user, topic):
-    Vote.objects.create(user=user, topic=topic, vote_type='d')
-    topic.votes -= 1
-    topic.save()
+    if not check_if_user_has_voted(user, topic):
+        Vote.objects.create(user=user, topic=topic, vote_type='d')
+        topic.votes -= 1
+        topic.save()
+
+def check_if_user_has_voted(user, topic):
+    if len(Vote.objects.filter(user=user, topic=topic)) > 0:
+        return True
+    return False

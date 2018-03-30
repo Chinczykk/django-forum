@@ -14,7 +14,15 @@
         <a href="{% url 'forum:upvote' section.name topic.id %}">
             <span class="small glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
         </a>
-        {{ topic.votes }}
+        {% if topic.votes < 0 %}
+        <span style="color: red;">
+        {% elif topic.votes = 0 %}
+        <span>
+        {% else %}
+        <span style="color: green;">
+        {% endif %}
+            {{ topic.votes }}
+        </span>
         <a href="{% url 'forum:downvote' section.name topic.id %}">
             <span class="small glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
         </a>
