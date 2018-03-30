@@ -1,5 +1,6 @@
 from .models import Section, Topic, Comment, Subscribtion, Vote
 from django.contrib.auth.models import User
+import operator
 
 def find_sections(search):
     return Section.objects.filter(name__contains=search)
@@ -125,7 +126,7 @@ def topics_for_subscribtions(user):
     topics = []
     for sub in subs:
         topics += topics_by_section_name(sub.section.name)
-    topics = Topic.objects.order_by('-created')
+    topics = sorted(topics, key=operator.attrgetter('created'), reverse=True)
     return topics
 
 def upvote(user, topic):
