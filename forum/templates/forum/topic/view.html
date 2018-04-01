@@ -8,7 +8,7 @@
         <b>{{ topic.created | date:'Y-m-d H:i' }}</b>
     </p>
     <p style="float: left">
-        <b>{{ topic.owner }}</b>
+        <b><a href="{% url 'forum:profile' topic.owner %}">{{ topic.owner }}</a></b>
     </p><br><br>
     <p style="float: left; width: 32%; text-align: left;">
         {% if user.is_authenticated %}
@@ -57,7 +57,7 @@
     {% for comment in comments %}
         <hr>
         <p style="float: left">
-            <b>{{ comment.owner }}</b>
+            <b><a href="{% url 'forum:profile' comment.owner %}">{{ comment.owner }}</a></b>
         </p>
         <p style="float: right">
             <b>{{ comment.created | date:'Y-m-d H:i' }}</b>

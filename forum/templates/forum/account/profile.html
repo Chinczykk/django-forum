@@ -1,0 +1,52 @@
+{% extends "forum/base.html" %}
+
+{% block title %}{{ user_to_edit }}'s profile{% endblock %}
+
+{% block content %}
+
+    <div class="center-text adjust-margin-top">
+        <h3>Details for {{ user_to_edit }}</h3>
+    </div>
+    <br>
+    <hr>
+    <br>
+
+    <div class="center-text">
+        {% csrf_token %}
+        {% if form != '' %}
+        <form method="POST" action="{% url 'forum:profile' user_to_edit %}">
+            {% csrf_token %}
+            {% for field in form %}
+                <h5>{{ field.label_tag }}</h5>
+                {{ field }}<br>
+                {% for error in field.errors %}
+                    <div class="error">{{ error | escape }}</div>
+                {% endfor %}<br>
+            {% endfor %}
+            <input type="hidden" name="save" value="True">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Save</button><br>
+        </form>
+        <form method="POST" action="{% url 'forum:profile' user_to_edit %}">
+            {% csrf_token %}
+            <input type="hidden" name="cancel" value="True">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cancel</button>
+        </form>
+        {% else %}
+        <form method="POST" action="{% url 'forum:profile' user_to_edit %}">
+            {% csrf_token %}
+            <h5>Firstname: {{ user_to_edit.first_name }}</h5>
+            <br>
+            <h5>Lastname: {{ user_to_edit.last_name }}</h5>
+            <br>
+            {% if user.id == user_to_edit.id %}
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit</button>
+            {% endif %}
+        </form>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block side %}
+
+{% endblock %}

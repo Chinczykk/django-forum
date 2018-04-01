@@ -36,3 +36,20 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('forum:section_list')
+
+def profile(request, name):
+    user = services.get_user_by_login(name)
+    form = ''
+    if request.method == 'POST':
+        if request.POST.get('cancel', '') == 'True':
+            form = ''
+        elif request.POST.get('save', '') == 'True':
+            form = forms.UserProfileForm(request.POST)
+            if form.is_valid():
+                cd = form.cleaned_data
+                services.edit_user_details(user, cd["firstname"], cd["lastname"])
+                form = ''
+        else:
+            form = forms.UserProfileForm(initial={'firstname': user.first_name, 'lastname': user.last_name})
+    return render(request, 'forum/account/profile.html', {'user_to_edit': user,
+                                                          'form': form})

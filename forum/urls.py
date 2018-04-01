@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^login/', accountViews.login, name='login'),
     url(r'^logout/', accountViews.logout, name='logout'),
     url(r'^new_topics/', topicViews.new_topic_list, name='new_topic_list'),
+    url(r'^profile/(?P<name>[\w\-\:\?\! ]+)/', accountViews.profile, name='profile'),
     url(r'^(?P<section_name>[\w\-\:\?\! ]+)/delete_topic/(?P<id>[\w\- ]+)/', topicViews.delete_topic, name='delete_topic'),
     url(r'^(?P<section_name>[\w\-\:\?\! ]+)/upvote/(?P<id>[\w\- ]+)/', topicViews.upvote, name='upvote'),
     url(r'^(?P<section_name>[\w\-\:\?\! ]+)/downvote/(?P<id>[\w\- ]+)/', topicViews.downvote, name='downvote'),

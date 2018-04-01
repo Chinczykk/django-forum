@@ -91,3 +91,15 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = models.Comment
         fields = ('body',)
+
+class UserProfileForm(forms.ModelForm):
+    firstname = forms.CharField(max_length=20,
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
+    lastname = forms.CharField(max_length=20,
+                                widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
+    class Meta:
+        model = models.User
+        fields = ('firstname', 'lastname')
+                            
+                            

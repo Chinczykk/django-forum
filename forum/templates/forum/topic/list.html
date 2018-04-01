@@ -10,9 +10,9 @@
       <p style="float: right">
         {{ topic.created | date:'Y-m-d H:i' }}
       </p>
-      <p style="float: left">
+      <a style="float: left" href="{% url 'forum:profile' topic.owner %}">
         {{ topic.owner }}
-      </p>
+      </a>
       <br><br>
     <p style="float: left; width: 32%; text-align: left;">
         {% if topic.votes < 0 %}
@@ -86,8 +86,8 @@
     </div>
     {% else %}
     <div class="center-text adjust-margin-top">
-      <b>Section:</b> {{ section.name }}<br>
-      <b>Owner: </b> {{ section.owner }}<br>
+      <b>Section:</b>{{ section.name }}<br>
+      <b>Owner: </b> <a href="{% url 'forum:profile' section.owner %}">{{ section.owner }}</a><br>
       <b>Description:</b> {{ section.description }}<br><br>
       {% if user.is_authenticated %}
       {% if not user.id == section.owner.id %}

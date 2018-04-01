@@ -175,3 +175,8 @@ def check_if_user_has_voted(user, topic):
 def get_vote(user, topic):
     if len(Vote.objects.filter(user_id=user.id, topic=topic)) > 0:
         return Vote.objects.filter(user_id=user.id, topic=topic)[0]
+
+def edit_user_details(user, firstname, lastname):
+    user.first_name = firstname
+    user.last_name = lastname
+    user.save()

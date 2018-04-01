@@ -62,6 +62,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <p class="dropdown-item">{{ user }}</p>
+                                <a class="dropdown-item" href="{% url 'forum:profile' user %}">Show profile</a>
                                 <a class="dropdown-item" href="{% url 'forum:logout' %}">Logout</a>
                             </div>
                         </li>

@@ -13,9 +13,9 @@
         <a style="float: left; width: 32%; text-align: center;" href="{% url 'forum:topic_list' topic.section.name %}">
             {{ topic.section.name }}
         </a>
-        <p style="float: left; width: 32%; text-align: right;">
+        <a style="float: left; width: 32%; text-align: right;" href="{% url 'forum:profile' topic.owner %}">
             {{ topic.owner }}
-        </p>
+        </a>
         <br><br>
         <p style="float: left; width: 32%; text-align: left;">
             {% if topic.votes < 0 %}
