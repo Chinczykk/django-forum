@@ -40,6 +40,7 @@ def logout(request):
 def profile(request, name):
     user = services.get_user_by_login(name)
     form = ''
+    top_topics = services.top_upvoted_posts(user)
     if request.method == 'POST':
         if request.POST.get('cancel', '') == 'True':
             form = ''
@@ -52,4 +53,5 @@ def profile(request, name):
         else:
             form = forms.UserProfileForm(initial={'firstname': user.first_name, 'lastname': user.last_name})
     return render(request, 'forum/account/profile.html', {'user_to_edit': user,
+                                                          'topics': top_topics,
                                                           'form': form})

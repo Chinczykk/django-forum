@@ -15,6 +15,7 @@
         {% csrf_token %}
         {% if form != '' %}
         <form method="POST" action="{% url 'forum:profile' user_to_edit %}">
+            <div class="center-text width-adjust-60">
             {% csrf_token %}
             {% for field in form %}
                 <h5>{{ field.label_tag }}</h5>
@@ -25,6 +26,7 @@
             {% endfor %}
             <input type="hidden" name="save" value="True">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Save</button><br>
+            </div>
         </form>
         <form method="POST" action="{% url 'forum:profile' user_to_edit %}">
             {% csrf_token %}
@@ -48,5 +50,34 @@
 {% endblock %}
 
 {% block side %}
-
+    <div class="center-text adjust-margin-top">
+        <h3>Top upvoted posts</h3><br><hr><br>
+        {% if topics %}
+        {% for topic in topics %}
+            <h4><a href="{% url 'forum:topic_view' topic.section.name topic.title %}" 
+                {% if forloop.counter == 1 %}
+                    style="color: #DAA520"
+                {% elif forloop.counter == 2%}
+                    style="color: #C0C0C0"
+                {% elif forloop.counter == 3%}
+                    style="color: #965A38"
+                {% endif %}>
+                    {{ topic.title }}
+                </a></h4>
+            <h4>
+                {% if topic.votes < 0 %}
+                <span style="color: red;">
+                {% elif topic.votes = 0 %}
+                <span>
+                {% else %}
+                <span style="color: green;">
+                {% endif %}
+                    {{ topic.votes }}
+                </span>
+            </h4><br><hr>
+        {% endfor %}
+        {% else %}
+            <h4>No topics yet!</h4>
+        {% endif %}
+    </div>
 {% endblock %}

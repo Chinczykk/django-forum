@@ -180,3 +180,7 @@ def edit_user_details(user, firstname, lastname):
     user.first_name = firstname
     user.last_name = lastname
     user.save()
+
+def top_upvoted_posts(user):
+    topics = Topic.objects.filter(owner_id=user.id).order_by('-votes')[:3]
+    return topics
