@@ -51,9 +51,10 @@
 
 {% block side %}
     <div class="center-text adjust-margin-top">
-        <h3>Top upvoted posts</h3><br><hr><br>
+        <h3>Top upvoted posts</h3><br><hr>
         {% if topics %}
         {% for topic in topics %}
+            <br>
             <h4><a href="{% url 'forum:topic_view' topic.section.name topic.title %}" 
                 {% if forloop.counter == 1 %}
                     style="color: #DAA520"

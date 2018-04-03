@@ -23,10 +23,16 @@ class RegisterForm(forms.ModelForm):
         cleaned_data = super(RegisterForm, self).clean()
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
+        login = cleaned_data.get("login")
 
         if password != confirm_password:
             raise forms.ValidationError(
                 {"confirm_password": ["Passwords are not equal",]}
+            )
+            
+        if User.objects.filter(username=login).exists():
+            raise forms.ValidationError(
+                {"login": ["Login is already taken",]}
             )
 
 class LoginForm(forms.ModelForm):
