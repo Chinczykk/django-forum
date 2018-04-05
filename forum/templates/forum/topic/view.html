@@ -69,7 +69,7 @@
         </p>
         {% if user.id == comment.owner.id or user.id == section.owner.id %}
         <p style="float: left; width: 32%; text-align: right;">
-            <form id="{{ comment.id }}" method="post" action="{% url 'forum:delete_comment' section.name topic.title comment.id %}">
+            <form id="{{ comment.id }}" method="post" action="{% url 'forum:delete_comment' section.name topic.title comment.id %}" novalidate>
                 {% csrf_token %}
                 <a href="javascript:{}" onclick="document.getElementById('{{ comment.id }}').submit();">X</a>   
             </form>
@@ -85,7 +85,7 @@
         <p class="center-text adjust-margin-top">No comments yet :(</p>
     {% endif %}
     {% if user.is_authenticated %}
-    <form method="post" action="{% url 'forum:topic_view' section.name topic.title %}">
+    <form method="post" action="{% url 'forum:topic_view' section.name topic.title %}" novalidate>
         {% csrf_token %}
         <input type="hidden" name="checker" value="True">
         {% for field in form %}

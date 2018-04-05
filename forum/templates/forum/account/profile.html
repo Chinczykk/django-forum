@@ -14,7 +14,7 @@
     <div class="center-text">
         {% csrf_token %}
         {% if form != '' %}
-        <form method="POST" action="{% url 'forum:profile' user_to_edit %}">
+        <form method="POST" action="{% url 'forum:profile' user_to_edit %}" novalidate>
             <div class="center-text width-adjust-60">
             {% csrf_token %}
             {% for field in form %}
@@ -28,13 +28,13 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Save</button><br>
             </div>
         </form>
-        <form method="POST" action="{% url 'forum:profile' user_to_edit %}">
+        <form method="POST" action="{% url 'forum:profile' user_to_edit %}" novalidate>
             {% csrf_token %}
             <input type="hidden" name="cancel" value="True">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Cancel</button>
         </form>
         {% else %}
-        <form method="POST" action="{% url 'forum:profile' user_to_edit %}">
+        <form method="POST" action="{% url 'forum:profile' user_to_edit %}" novalidate>
             {% csrf_token %}
             <h5>Firstname: {{ user_to_edit.first_name }}</h5>
             <br>

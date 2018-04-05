@@ -3,7 +3,7 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <form method="post" action="{% url 'forum:login' %}">
+    <form method="post" action="{% url 'forum:login' %}" novalidate>
         {% csrf_token %}
         <div class="center-text width-adjust-60">
             {% for field in form %}

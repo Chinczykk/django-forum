@@ -29,7 +29,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% if user.is_authenticated %}
-                        <form id="add_form" method="post" action="{% url 'forum:section_list' %}">
+                        <form id="add_form" method="post" action="{% url 'forum:section_list' %}" novalidate>
                             {% csrf_token %}
                             <a class="dropdown-item" href="javascript:{}" onclick="document.getElementById('add_form').submit();">Add new section</a>
                         </form>
