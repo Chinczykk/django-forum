@@ -30,11 +30,6 @@ class RegisterForm(forms.ModelForm):
                 raise forms.ValidationError(
                     {"confirm_password": ["Passwords are not equal",]}
                 )
-            
-        if User.objects.filter(username=login).exists():
-            raise forms.ValidationError(
-                {"login": ["Login is already taken",]}
-            )
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
