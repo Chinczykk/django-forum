@@ -24,12 +24,18 @@ class RegisterForm(forms.ModelForm):
         password = cleaned_data.get("password")
         confirm_password = cleaned_data.get("confirm_password")
         login = cleaned_data.get("login")
+        email = cleaned_data.get("email")
 
         if password != None:
             if password != confirm_password:
                 raise forms.ValidationError(
                     {"confirm_password": ["Passwords are not equal",]}
                 )
+        
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                {'email': ['This email is taken.']}
+            )
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
