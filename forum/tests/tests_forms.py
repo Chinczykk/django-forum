@@ -107,3 +107,84 @@ class SectionFormTest(TestCase):
         }, {
             'name': ['Section with this name already exists']
         }, SectionForm)
+
+class TopicFormTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(username='logged', password='logged')
+        self.section = Section.objects.create(name='test12', description='test', owner=self.user)
+
+    def test_good_credentials(self):
+        form = TopicForm({
+            'title': 'test123',
+            'body': 'test'
+        })
+        self.assertTrue(form.is_valid())
+        topic = form.save(commit=False)
+        topic.owner = self.user
+        topic.section = self.section
+        topic.save()
+        self.assertEqual(topic.title, 'test123')
+        self.assertEqual(topic.body, 'test')
+        self.assertEqual(topic.owner.id, 1)
+        self.assertEqual(topic.owner.username, 'logged')
+        self.assertEqual(topic.section.name, 'test12')
+        self.assertEqual(topic.section.description, 'test')
+
+    def test_empty_fields(self):
+        check_form_for_errors(self, {}, {
+            'title': ['This field is required.'],
+            'body': ['This field is required.']
+        }, TopicForm)
+
+    def test_short_title(self):
+        check_form_for_errors(self, {
+            'title': 'te',
+            'body': 'te'
+        }, {
+            'title': ['This field should have atleast 5 characters']
+        }, TopicForm)
+
+class CommentFormTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(username='logged', password='logged')
+        self.section = Section.objects.create(name='test123', description='test', owner=self.user)
+        self.topic = Topic.objects.create(title='test132', body='test', section=self.section, owner=self.user)
+
+    def test_good_credentials(self):
+        form = CommentForm({
+            'body': 'test123'
+        })
+        self.assertTrue(form.is_valid())
+        comment = form.save(commit=False)
+        comment.owner = self.user
+        comment.topic = self.topic
+        comment.save()
+        self.assertEqual(comment.body, 'test123')
+        self.assertEqual(comment.owner.id, 1)
+        self.assertEqual(comment.owner.username, 'logged')
+        self.assertEqual(comment.topic.title, 'test132')
+        self.assertEqual(comment.topic.body, 'test')
+        self.assertEqual(comment.topic.section.name, 'test123')
+        self.assertEqual(comment.topic.section.description, 'test')
+
+    def test_empty_fields(self):
+        check_form_for_errors(self, {}, {
+            'body': ['This field is required.']
+        }, CommentForm)
+
+class LoginFormTest(TestCase):
+
+    def test_good_credentials(self):
+        form = LoginForm({
+            'username': 'test123',
+            'password': 'test1234'
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_empty_fields(self):
+        check_form_for_errors(self, {}, {
+            'username': ['This field is required.'],
+            'password': ['This field is required.']
+        }, LoginForm)
